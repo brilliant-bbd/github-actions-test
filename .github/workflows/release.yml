@@ -16,19 +16,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Extract tag name
-        id: extract_tag
+      - name: Generate custom tag name
+        id: generate_tag
         run: |
-          TAG_NAME=${GITHUB_REF#refs/tags/}
-          echo "TAG_NAME=${TAG_NAME}"
-          echo "::set-output name=tag_name::${TAG_NAME}" 
+          DATE=$(date +'%Y%m%d%H%M%S')
+          COMMIT_HASH=$(git rev-parse --short HEAD)
+          CUSTOM_TAG="release-${DATE}-${COMMIT_HASH}"
+          
+          echo "CUSTOM_TAG=${CUSTOM_TAG}"
+          echo "::set-output name=custom_tag::${CUSTOM_TAG}" 
 
-      - name: Create release
+      - name: Create release with custom tag
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.extract_tag.outputs.tag_name }} 
-          release_name: ${{ steps.extract_tag.outputs.tag_name }}
+          tag_name: ${{ steps.generate_tag.outputs.custom_tag }} 
+          release_name: ${{ steps.generate_tag.outputs.custom_tag }}
           draft: false
           prerelease: false
