@@ -1,8 +1,9 @@
 name: release
 on:
-    workflow_run:
-        workflows: ["Build"]
-        types: ["completed"]
+  workflow_run:
+    workflows: ["Build"]
+    types: ["completed"]
+
 permissions:
   contents: write
   id-token: write
