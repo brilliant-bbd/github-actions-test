@@ -18,8 +18,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: |
           npm i -D
+          npm install
           npm test --if-present
-          npm build
         env:
           CI: true
       - name: Upload Artifact
