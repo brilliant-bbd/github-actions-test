@@ -19,7 +19,7 @@ jobs:
       - run: |
           npm i -D
           npm test --if-present
-          npm build
+          npm run build
         env:
           CI: true
       - name: Upload Artifact
