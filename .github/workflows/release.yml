@@ -21,7 +21,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: api
-          path: ./api
+          path: ./api.zip
 
       - name: Generate custom tag name
         id: generate_tag
@@ -48,6 +48,6 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./artifact/api.zip  # Path to the downloaded artifact
+          asset_path: ./api.zip  # Path to the downloaded artifact
           asset_name: api.zip  # Name of the uploaded artifact
           asset_content_type: application/zip
