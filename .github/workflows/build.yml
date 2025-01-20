@@ -17,7 +17,7 @@ jobs:
 
       - name: Package artifact
         run: |
-          zip -r api.zip ./ -x "*.github/*" -x "*.env" -x "logs/*" -x "*.log"  
+          zip -r api.zip ./ -x "*.github/*" -x ".git/" -x "*.env" -x "logs/*" -x "*.log"  
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
