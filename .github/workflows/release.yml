@@ -20,10 +20,8 @@ jobs:
       - name: Download build artifact (api.zip)
         uses: actions/download-artifact@v3
         with:
-          name: api  # Name must match the artifact name from the Build workflow
-
-      - name: List files in artifact directory
-        run: ls -la ./artifact  # Debugging step to list the files in the artifact directory
+          name: api
+          path: ./artifact/api.zip
 
       - name: Generate custom tag name
         id: generate_tag
