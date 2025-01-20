@@ -1,8 +1,12 @@
 name: release
 on:
-  push:
-    tags:
-      - 'v*'  # Match any tag starting with 'v'
+  workflow_run:
+    workflows: ["Build"]
+    types: ["completed"]
+
+permissions:
+  contents: write
+  id-token: write
 
 jobs:
   release:
@@ -12,12 +16,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Extract tag name
+        id: extract_tag
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          echo "TAG_NAME=${TAG_NAME}"
+          echo "::set-output name=tag_name::${TAG_NAME}" 
+
       - name: Create release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
+          tag_name: ${{ steps.extract_tag.outputs.tag_name }} 
+          release_name: ${{ steps.extract_tag.outputs.tag_name }}
           draft: false
           prerelease: false
