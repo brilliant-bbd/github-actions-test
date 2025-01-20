@@ -20,7 +20,7 @@ jobs:
           zip -r api.zip ./ -x "*.git/*" -x "*.github/*" -x "*.env" -x "logs/*" -x "*.log"
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: api
           path: api.zip
