@@ -21,7 +21,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: api
-          path: ./artifact/api.zip
+          path: ./api
 
       - name: Generate custom tag name
         id: generate_tag
