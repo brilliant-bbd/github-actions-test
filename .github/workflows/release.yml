@@ -21,7 +21,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: api  # Name must match the artifact name from the Build workflow
-          path: ./artifact  # Path to where the artifact will be saved
 
       - name: List files in artifact directory
         run: ls -la ./artifact  # Debugging step to list the files in the artifact directory
