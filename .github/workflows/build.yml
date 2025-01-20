@@ -2,22 +2,24 @@ name: Build
 on:
   push:
     branches:
-      -main
+      - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
-        uses: actions/checkout
+        uses: actions/checkout@v2
 
       - name: Install dependencies
         run: npm install
 
       - name: Package artifact
         run: zip -r api.zip src/
-      
+
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-         name: api
-         path: api.zip
+          name: api
+          path: api.zip
