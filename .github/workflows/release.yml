@@ -17,10 +17,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Download build artifact (api.zip)
+      - name: Download build artifact
         uses: actions/download-artifact@v3
         with:
           name: api
+          path: ./api
 
       - name: Verify if api.zip is downloaded
         run: |
