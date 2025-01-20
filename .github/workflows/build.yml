@@ -1,15 +1,15 @@
-name: Build and deploy
+name: build
 on:
   push:
     branches:
       - main
 jobs:
   build:
-    name: Build
-    runs-on: ubuntu-18.04
+    name: build
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10.x]
+        node-version: [18.x]
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
@@ -19,7 +19,7 @@ jobs:
       - run: |
           npm i -D
           npm test --if-present
-          npm run build:prod
+          npm build
         env:
           CI: true
       - name: Upload Artifact
