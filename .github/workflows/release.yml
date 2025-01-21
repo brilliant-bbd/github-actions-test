@@ -64,8 +64,8 @@ jobs:
         env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-            tag_name: ${{ github.ref }}
-            release_name: Release ${{ github.ref }}
+            tag_name: ${{ env.CUSTOM_TAG }}  # Use the dynamically generated CUSTOM_TAG
+            release_name: Release ${{ env.CUSTOM_TAG }}  # Use the same tag for release name
             body: |
               Changes in this Release
               - First Change
