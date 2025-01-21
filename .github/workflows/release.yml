@@ -56,23 +56,27 @@ jobs:
           COMMIT_HASH=$(git rev-parse --short HEAD)
           CUSTOM_TAG="release-${DATE}-${COMMIT_HASH}"
           
-          echo "CUSTOM_TAG=${CUSTOM_TAG}" >> $GITHUB_ENV  # Use the environment file to set the variable
+          echo "CUSTOM_TAG=${CUSTOM_TAG}" >> $GITHUB_ENV
 
-      - name: Create release with custom tag
+      - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.CUSTOM_TAG }}   # Use the dynamically generated tag name
-          release_name: ${{ env.CUSTOM_TAG }}  # Use the same tag name for the release name
-          draft: false
-          prerelease: false
+            tag_name: ${{ github.ref }}
+            release_name: Release ${{ github.ref }}
+            body: |
+              Changes in this Release
+              - First Change
+              - Second Change
+            draft: false
+            prerelease: false
 
       - name: Upload artifact to release
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./api.zip  # Path to the downloaded artifact
-          asset_name: api.zip  # Name of the uploaded artifact
+          asset_path: ./api.zip
+          asset_name: api.zip
           asset_content_type: application/zip
