@@ -29,11 +29,11 @@ jobs:
               });
               
               let matchArtifact = allArtifacts.data.artifacts.find((artifact) => artifact.name === "api");
-    
+
               if (!matchArtifact) {
                 throw new Error('Artifact "api" not found.');
               }
-    
+
               let download = await github.rest.actions.downloadArtifact({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -56,8 +56,7 @@ jobs:
           COMMIT_HASH=$(git rev-parse --short HEAD)
           CUSTOM_TAG="release-${DATE}-${COMMIT_HASH}"
           
-          echo "CUSTOM_TAG=${CUSTOM_TAG}"
-          echo "CUSTOM_TAG=${CUSTOM_TAG}" >> $GITHUB_ENV
+          echo "CUSTOM_TAG=${CUSTOM_TAG}" >> $GITHUB_ENV  # Use the environment file to set the variable
 
       - name: Create release with custom tag
         id: create_release
@@ -65,8 +64,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: "tag"
-          release_name: "tag"
+          tag_name: ${{ env.CUSTOM_TAG }}   # Use the dynamically generated tag name
+          release_name: ${{ env.CUSTOM_TAG }}  # Use the same tag name for the release name
           draft: false
           prerelease: false
 
